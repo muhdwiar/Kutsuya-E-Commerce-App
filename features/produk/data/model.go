@@ -14,9 +14,10 @@ type Produk struct {
 	Merk            string
 	Warna           string
 	Gender_Pengguna string
-	Harga           string
+	Harga           int
 	Desksripsi      string
-	Url_Image       string
+	File_Image      string
+	User_Id         uint
 	User            userModel.User
 }
 
@@ -29,7 +30,7 @@ func fromCore(dataCore produk.Core) Produk {
 		Gender_Pengguna: dataCore.Gender_Pengguna,
 		Harga:           dataCore.Harga,
 		Desksripsi:      dataCore.Desksripsi,
-		Url_Image:       dataCore.Url_Image,
+		File_Image:      dataCore.File_Image,
 	}
 
 }
@@ -44,7 +45,7 @@ func (dataProduk *Produk) toCore() produk.Core {
 		Gender_Pengguna: dataProduk.Gender_Pengguna,
 		Harga:           dataProduk.Harga,
 		Desksripsi:      dataProduk.Desksripsi,
-		Url_Image:       dataProduk.Url_Image,
+		File_Image:      dataProduk.File_Image,
 	}
 }
 
