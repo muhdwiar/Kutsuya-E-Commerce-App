@@ -12,6 +12,7 @@ type ProdukResponse struct {
 	Harga           int    `json:"harga" form:"harga"`
 	Desksripsi      string `json:"deskripsi" form:"deskripsi"`
 	File_Image      string `json:"file_image" form:"file_image"`
+	User_Id         uint   `json:"user_id" form:"user_id"`
 }
 
 func FromCore(dataCore produk.Core) ProdukResponse {
@@ -25,6 +26,7 @@ func FromCore(dataCore produk.Core) ProdukResponse {
 		Harga:           dataCore.Harga,
 		Desksripsi:      dataCore.Desksripsi,
 		File_Image:      dataCore.File_Image,
+		User_Id:         dataCore.User_Id,
 	}
 
 }

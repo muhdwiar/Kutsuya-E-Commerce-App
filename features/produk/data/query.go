@@ -28,3 +28,15 @@ func (repo *productData) Select_AllProduk() ([]produk.Core, error) {
 	produk_List := toCoreList(all_ProdData)
 	return produk_List, nil
 }
+
+func (repo *productData) InsertProduk(newProduk produk.Core) (int, error) {
+	newUser := fromCore(newProduk)
+
+	tx := repo.db.Create(&newUser)
+	if tx.Error != nil {
+		return 0, tx.Error
+	}
+
+	return int(tx.RowsAffected), nil
+
+}
