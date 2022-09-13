@@ -18,11 +18,11 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home/ubuntu/kutuya
+            cd /home/ubuntu/kutsuya
             git pull origin main
-            docker stop be11Api
-            docker rm be11Api
-            docker build -t be11-api:latest .
+            docker stop kutsuya
+            docker rm kutsuya
+            docker build -t kutsuya-images:latest .
             docker run -d -p 80:8000 -e SERVER_PORT=${{ secrets.SERVER_PORT }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_HOST=${{ secrets.DB_HOST }} -e DB_PORT=${{ secrets.DB_PORT }} -e DB_NAME=${{ secrets.DB_NAME }} --name kutsuya kutsuya-images:latest 
 
        
