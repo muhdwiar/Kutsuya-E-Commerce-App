@@ -25,7 +25,19 @@ func HashPassword(password string) (string, error) {
 	return string(bytes), err
 }
 
+func CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
+}
+
 func (repo *userData) InsertData(data user.Core) (string, int, error) {
+	hash_pass, errHash := HashPassword(data.Password)
+
+	if errHash != nil {
+		return "", -1, errHash
+	}
+	data.Password = hash_pass //memasukkan hasil enskripsi data password
+
 	newUser := fromCore(data)
 	token, errToken := middlewares.CreateToken(int(newUser.ID))
 	if errToken != nil {
@@ -42,7 +54,13 @@ func (repo *userData) InsertData(data user.Core) (string, int, error) {
 
 func (repo *userData) LoginUser(data user.Core) (string, error) {
 	var userData User
-	tx := repo.db.Where("email = ? AND password = ?", data.Email, data.Password).First(&userData)
+	tx := repo.db.Where("email = ?", data.Email).First(&userData)
+
+	check_result := CheckPasswordHash(data.Password, userData.Password)
+
+	if !check_result {
+		return "", errors.New("password salah")
+	}
 
 	if tx.Error != nil {
 		return "", tx.Error
