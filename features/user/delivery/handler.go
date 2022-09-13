@@ -50,15 +50,15 @@ func (delivery *UserDelivery) GetLoginUser(c echo.Context) error {
 	errBind := c.Bind(&userRequest_Login)
 
 	if errBind != nil {
-		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("fail bind user data"))
+		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("data doesnt exist"))
 	}
 
 	Token_JWT, err := delivery.userUsecase.GetLogin(ToCore(userRequest_Login))
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("fail input user data"))
+		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("data doesnt exist"))
 	}
 
-	return c.JSON(http.StatusOK, helper.Success_DataResp("get all user data", Token_JWT))
+	return c.JSON(http.StatusOK, helper.Success_DataResp("login berhasil", Token_JWT))
 
 }
