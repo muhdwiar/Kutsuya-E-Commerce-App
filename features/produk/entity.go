@@ -17,6 +17,7 @@ type Core struct {
 	File_Image      string
 	Created_At      time.Time
 	Updated_At      time.Time
+	User_Id         uint
 	User            user.Core
 }
 
