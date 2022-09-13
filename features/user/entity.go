@@ -13,7 +13,7 @@ type Core struct {
 }
 
 type UsecaseInterface interface {
-	PostData(data Core) (row int, err error)
+	PostData(data Core) (token string, row int, err error)
 	GetLogin(data Core) (token string, err error)
 }
 

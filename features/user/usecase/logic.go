@@ -15,17 +15,17 @@ func New(data user.DataInterface) user.UsecaseInterface {
 	}
 
 }
-func (usecase *userUsecase) PostData(data user.Core) (int, error) {
+func (usecase *userUsecase) PostData(data user.Core) (string, int, error) {
 	if data.Nama_User == "" || data.Email == "" || data.Password == "" {
-		return -1, errors.New("data input ada yang kosong")
+		return "", -1, errors.New("data input ada yang kosong")
 	}
 
-	_, row, err := usecase.userData.InsertData(data)
+	token, row, err := usecase.userData.InsertData(data)
 	if err != nil {
-		return -1, err
+		return "", -1, err
 	}
 
-	return row, err
+	return token, row, err
 
 }
 
