@@ -8,6 +8,8 @@ WORKDIR /app
 # copy semua file ke app
 COPY ./ /app
 
+RUN go mod tidy
+
 RUN go build -o kutsuya 
 
 CMD ("./kutsuya")
