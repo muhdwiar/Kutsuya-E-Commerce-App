@@ -17,13 +17,18 @@ type Core struct {
 	File_Image      string
 	Created_At      time.Time
 	Updated_At      time.Time
+	User_Id         uint
 	User            user.Core
 }
 
 type UsecaseInterface interface {
-	PutProduk(data Core) (row int, err error)
+	Get_AllProduk() (data []Core, err error)
+	PostProduk(data Core) (row int, err error)
+	PutProduk(data Core, id int) (row int, err error)
 }
 
 type DataInterface interface {
-	UpdateDataProduk(data Core) (row int, err error)
+	Select_AllProduk() (data []Core, err error)
+	InsertProduk(data Core) (row int, err error)
+	UpdateDataProduk(data Core, id int) (row int, err error)
 }

@@ -18,8 +18,33 @@ func New(db *gorm.DB) produk.DataInterface {
 
 }
 
-func (repo *productData) UpdateDataProduk(dataProduk produk.Core) (int, error) {
+func (repo *productData) Select_AllProduk() ([]produk.Core, error) {
+	var all_ProdData []Produk
+	tx := repo.db.Find(&all_ProdData)
+
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+
+	produk_List := toCoreList(all_ProdData)
+	return produk_List, nil
+}
+
+func (repo *productData) InsertProduk(newProduk produk.Core) (int, error) {
+	newUser := fromCore(newProduk)
+
+	tx := repo.db.Create(&newUser)
+	if tx.Error != nil {
+		return 0, tx.Error
+	}
+
+	return int(tx.RowsAffected), nil
+
+}
+
+func (repo *productData) UpdateDataProduk(dataProduk produk.Core, id_produk int) (int, error) {
 	var dataUpdate Produk
+	dataProduk.ID = uint(id_produk)
 
 	tx_OldData := repo.db.First(&dataUpdate, dataProduk.ID)
 

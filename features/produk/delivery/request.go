@@ -11,11 +11,11 @@ type ProdukRequest struct {
 	Harga           int    `json:"harga" form:"harga"`
 	Desksripsi      string `json:"deskripsi" form:"deskripsi"`
 	File_Image      string `json:"file_image" form:"file_image"`
+	User_Id         uint   `json:"user_id" form:"user_id"`
 }
 
-func ToCore(dataRequest ProdukRequest, idRequest int) produk.Core {
+func ToCore(dataRequest ProdukRequest) produk.Core {
 	return produk.Core{
-		ID:              uint(idRequest),
 		Nama_Produk:     dataRequest.Nama_Produk,
 		Ukuran:          dataRequest.Ukuran,
 		Merk:            dataRequest.Merk,
@@ -24,6 +24,7 @@ func ToCore(dataRequest ProdukRequest, idRequest int) produk.Core {
 		Harga:           dataRequest.Harga,
 		Desksripsi:      dataRequest.Desksripsi,
 		File_Image:      dataRequest.File_Image,
+		User_Id:         dataRequest.User_Id,
 	}
 
 }

@@ -31,6 +31,7 @@ func fromCore(dataCore produk.Core) Produk {
 		Harga:           dataCore.Harga,
 		Desksripsi:      dataCore.Desksripsi,
 		File_Image:      dataCore.File_Image,
+		User_Id:         dataCore.User_Id,
 	}
 
 }
@@ -46,6 +47,7 @@ func (dataProduk *Produk) toCore() produk.Core {
 		Harga:           dataProduk.Harga,
 		Desksripsi:      dataProduk.Desksripsi,
 		File_Image:      dataProduk.File_Image,
+		User_Id:         dataProduk.User_Id,
 	}
 }
 

@@ -13,7 +13,11 @@ type Core struct {
 }
 
 type UsecaseInterface interface {
+	PostData(data Core) (token string, row int, err error)
+	PostLogin(data Core) (token string, err error)
 }
 
 type DataInterface interface {
+	InsertData(data Core) (token string, row int, err error)
+	LoginUser(data Core) (token string, err error)
 }

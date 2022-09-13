@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"errors"
 	"project/kutsuya/features/user"
 )
 
@@ -12,5 +13,32 @@ func New(data user.DataInterface) user.UsecaseInterface {
 	return &userUsecase{
 		userData: data,
 	}
+
+}
+func (usecase *userUsecase) PostData(data user.Core) (string, int, error) {
+	if data.Nama_User == "" || data.Email == "" || data.Password == "" {
+		return "", -1, errors.New("data input ada yang kosong")
+	}
+
+	token, row, err := usecase.userData.InsertData(data)
+	if err != nil {
+		return "", -1, err
+	}
+
+	return token, row, err
+
+}
+
+func (usecase *userUsecase) PostLogin(data user.Core) (string, error) {
+	if data.Email == "" || data.Password == "" {
+		return "", errors.New("data input ada yang kosong")
+	}
+
+	token, err := usecase.userData.LoginUser(data)
+	if err != nil {
+		return "", err
+	}
+
+	return token, err
 
 }

@@ -1,0 +1,6 @@
+{
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-workflow.json": "file:///home/raorafarhan/AlterraAcademy/Project/BE11/.github/workflows/deploy.yml",
+        "https://raw.githubusercontent.com/deployphp/deployer/master/src/schema.json": "file:///home/raorafarhan/AlterraAcademy/Project/BE11/.github/wor/deploy.yml"
+    }
+}
