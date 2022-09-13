@@ -19,7 +19,7 @@ func New(e *echo.Echo, usecase produk.UsecaseInterface) {
 	}
 
 	e.GET("/products", handler.Get_AllProduk)
-	e.POST("/products", handler.Get_AllProduk, middlewares.JWTMiddleware())
+	e.POST("/products", handler.PostProduk, middlewares.JWTMiddleware())
 }
 
 func (delivery *ProdukDelivery) Get_AllProduk(c echo.Context) error {
