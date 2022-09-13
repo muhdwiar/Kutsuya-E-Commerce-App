@@ -18,7 +18,7 @@ func New(e *echo.Echo, usecase user.UsecaseInterface) {
 	}
 
 	// e.GET("/users", handler.GetAll, middlewares.JWTMiddleware())
-	e.GET("/login", handler.GetLoginUser)
+	e.POST("/login", handler.LoginUser)
 	e.POST("/users", handler.PostData)
 
 }
@@ -45,7 +45,7 @@ func (delivery *UserDelivery) PostData(c echo.Context) error {
 
 }
 
-func (delivery *UserDelivery) GetLoginUser(c echo.Context) error {
+func (delivery *UserDelivery) LoginUser(c echo.Context) error {
 	var userRequest_Login UserRequest
 	errBind := c.Bind(&userRequest_Login)
 
