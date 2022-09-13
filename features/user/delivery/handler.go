@@ -31,7 +31,7 @@ func (delivery *UserDelivery) PostData(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("fail bind user data"))
 	}
 
-	row, err := delivery.userUsecase.PostData(ToCore(userRequestData))
+	token, row, err := delivery.userUsecase.PostData(ToCore(userRequestData))
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("fail input user data"))
@@ -41,7 +41,7 @@ func (delivery *UserDelivery) PostData(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("insert row affected is not 1"))
 	}
 
-	return c.JSON(http.StatusOK, helper.Success_Resp("post new user data"))
+	return c.JSON(http.StatusOK, helper.Success_DataResp("Succes Insert", token))
 
 }
 
@@ -59,6 +59,6 @@ func (delivery *UserDelivery) GetLoginUser(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("data doesnt exist"))
 	}
 
-	return c.JSON(http.StatusOK, helper.Success_DataResp("login berhasil", Token_JWT))
+	return c.JSON(http.StatusOK, helper.Success_DataResp("Succes Login", Token_JWT))
 
 }
