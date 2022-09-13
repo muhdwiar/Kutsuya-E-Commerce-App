@@ -41,7 +41,7 @@ func (delivery *UserDelivery) PostData(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("insert row affected is not 1"))
 	}
 
-	return c.JSON(http.StatusOK, helper.Success_DataResp("Succes Insert", token))
+	return c.JSON(http.StatusOK, helper.Success_DataResp("Success Insert", token))
 
 }
 
