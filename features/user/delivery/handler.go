@@ -50,7 +50,7 @@ func (delivery *UserDelivery) LoginUser(c echo.Context) error {
 	errBind := c.Bind(&userRequest_Login)
 
 	if errBind != nil {
-		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("data doesnt' exist"))
+		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("data doesn't exist"))
 	}
 
 	Token_JWT, err := delivery.userUsecase.PostLogin(ToCore(userRequest_Login))
