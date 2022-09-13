@@ -15,8 +15,8 @@ func New(data produk.DataInterface) produk.UsecaseInterface {
 
 }
 
-func (usecase *produkUsecase) Get_AllProduk() ([]produk.Core, error) {
-	results, err := usecase.produkData.Select_AllProduk()
-	return results, err
+func (usecase *produkUsecase) PutProduk(data produk.Core) (int, error) {
+	row, err := usecase.produkData.UpdateDataProduk(data)
+	return row, err
 
 }
