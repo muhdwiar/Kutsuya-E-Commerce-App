@@ -53,7 +53,7 @@ func (delivery *UserDelivery) LoginUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("data doesnt exist"))
 	}
 
-	Token_JWT, err := delivery.userUsecase.GetLogin(ToCore(userRequest_Login))
+	Token_JWT, err := delivery.userUsecase.PostLogin(ToCore(userRequest_Login))
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("data doesnt exist"))

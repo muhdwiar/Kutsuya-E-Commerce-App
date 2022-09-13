@@ -29,7 +29,7 @@ func (usecase *userUsecase) PostData(data user.Core) (string, int, error) {
 
 }
 
-func (usecase *userUsecase) GetLogin(data user.Core) (string, error) {
+func (usecase *userUsecase) PostLogin(data user.Core) (string, error) {
 	if data.Email == "" || data.Password == "" {
 		return "", errors.New("data input ada yang kosong")
 	}

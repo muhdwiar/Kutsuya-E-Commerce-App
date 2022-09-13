@@ -14,7 +14,7 @@ type Core struct {
 
 type UsecaseInterface interface {
 	PostData(data Core) (token string, row int, err error)
-	GetLogin(data Core) (token string, err error)
+	PostLogin(data Core) (token string, err error)
 }
 
 type DataInterface interface {
