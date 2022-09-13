@@ -1,6 +1,7 @@
 package data
 
 import (
+	// produkModel "project/kutsuya/features/produk/data"
 	"project/kutsuya/features/user"
 
 	"gorm.io/gorm"
@@ -12,6 +13,21 @@ type User struct {
 	Email     string
 	Password  string
 	Alamat    string
+	Produk    []Produk
+}
+
+type Produk struct {
+	gorm.Model
+	Nama_Produk     string
+	Ukuran          int
+	Merk            string
+	Warna           string
+	Gender_Pengguna string
+	Harga           int
+	Desksripsi      string
+	File_Image      string
+	User_Id         uint
+	User            User
 }
 
 func fromCore(dataCore user.Core) User {

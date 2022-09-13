@@ -12,16 +12,18 @@ type Core struct {
 	Merk            string
 	Warna           string
 	Gender_Pengguna string
-	Harga           string
+	Harga           int
 	Desksripsi      string
-	Url_Image       string
+	File_Image      string
 	Created_At      time.Time
 	Updated_At      time.Time
 	User            user.Core
 }
 
 type UsecaseInterface interface {
+	Get_AllProduk() (data []Core, err error)
 }
 
 type DataInterface interface {
+	Select_AllProduk() (data []Core, err error)
 }
