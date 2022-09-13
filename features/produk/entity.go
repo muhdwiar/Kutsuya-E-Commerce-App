@@ -22,8 +22,10 @@ type Core struct {
 
 type UsecaseInterface interface {
 	Get_AllProduk() (data []Core, err error)
+	PostProduk(data Core) (row int, err error)
 }
 
 type DataInterface interface {
 	Select_AllProduk() (data []Core, err error)
+	InsertProduk(data Core) (row int, err error)
 }
