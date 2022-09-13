@@ -32,3 +32,9 @@ func (usecase *produkUsecase) PostProduk(newProduk produk.Core) (int, error) {
 	return row, err
 
 }
+
+func (usecase *produkUsecase) PutProduk(data produk.Core, id_produk int) (int, error) {
+	row, err := usecase.produkData.UpdateDataProduk(data, id_produk)
+	return row, err
+
+}
