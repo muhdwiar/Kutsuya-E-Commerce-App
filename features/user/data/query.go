@@ -5,6 +5,7 @@ import (
 	"project/kutsuya/features/user"
 	"project/kutsuya/middlewares"
 
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -17,6 +18,11 @@ func New(db *gorm.DB) user.DataInterface {
 		db: db,
 	}
 
+}
+
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
 }
 
 func (repo *userData) InsertData(data user.Core) (string, int, error) {
