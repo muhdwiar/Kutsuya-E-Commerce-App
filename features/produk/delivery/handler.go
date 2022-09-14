@@ -21,7 +21,7 @@ func New(e *echo.Echo, usecase produk.UsecaseInterface) {
 
 	e.GET("/products", handler.Get_AllProduk)
 	e.POST("/products", handler.PostProduk, middlewares.JWTMiddleware())
-	e.PUT("/products/:id", handler.Put_ProdukData)
+	e.PUT("/products/:id", handler.Put_ProdukData, middlewares.JWTMiddleware())
 }
 
 func (delivery *ProdukDelivery) Get_AllProduk(c echo.Context) error {
