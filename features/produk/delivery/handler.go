@@ -22,6 +22,7 @@ func New(e *echo.Echo, usecase produk.UsecaseInterface) {
 	e.GET("/products", handler.Get_AllProduk)
 	e.POST("/products", handler.PostProduk, middlewares.JWTMiddleware())
 	e.PUT("/products/:id", handler.Put_ProdukData, middlewares.JWTMiddleware())
+	e.GET("/products/:id", handler.Get_ProdukById)
 }
 
 func (delivery *ProdukDelivery) Get_AllProduk(c echo.Context) error {
@@ -86,5 +87,24 @@ func (delivery *ProdukDelivery) Put_ProdukData(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, helper.Success_Resp("succes update produk data"))
+
+}
+
+func (delivery *ProdukDelivery) Get_ProdukById(c echo.Context) error {
+
+	id := c.Param("id")
+	id_conv, err_conv := strconv.Atoi(id)
+
+	if err_conv != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err_conv.Error())
+	}
+
+	result, err := delivery.produkUsecase.GetProdukById(id_conv)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("fail get product data"))
+	}
+
+	return c.JSON(http.StatusOK, helper.Success_DataResp("get product data", FromCore(result)))
 
 }

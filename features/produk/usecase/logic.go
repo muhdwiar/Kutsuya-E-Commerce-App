@@ -38,3 +38,8 @@ func (usecase *produkUsecase) PutProduk(data produk.Core, id_produk int) (int, e
 	return row, err
 
 }
+
+func (usecase *produkUsecase) GetProdukById(id_produk int) (produk.Core, error) {
+	data_produk, err := usecase.produkData.SelectProdukById(id_produk)
+	return data_produk, err
+}
