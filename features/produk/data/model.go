@@ -19,6 +19,17 @@ type Produk struct {
 	File_Image      string
 	User_Id         uint
 	User            userModel.User
+	Shopping_Cart   []Shopping_Cart
+}
+
+type Shopping_Cart struct {
+	gorm.Model
+	Jumlah      int
+	Total_Biaya int
+	User_Id     uint
+	User        userModel.User
+	Product_Id  uint
+	Produk      Produk
 }
 
 func fromCore(dataCore produk.Core) Produk {

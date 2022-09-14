@@ -9,11 +9,12 @@ import (
 
 type User struct {
 	gorm.Model
-	Nama_User string
-	Email     string
-	Password  string
-	Alamat    string
-	Produk    []Produk
+	Nama_User     string
+	Email         string
+	Password      string
+	Alamat        string
+	Produk        []Produk
+	Shopping_Cart []Shopping_Cart
 }
 
 type Produk struct {
@@ -28,6 +29,16 @@ type Produk struct {
 	File_Image      string
 	User_Id         uint
 	User            User
+}
+
+type Shopping_Cart struct {
+	gorm.Model
+	Jumlah      int
+	Total_Biaya int
+	User_Id     uint
+	User        User
+	Product_Id  uint
+	Produk      Produk
 }
 
 func fromCore(dataCore user.Core) User {
