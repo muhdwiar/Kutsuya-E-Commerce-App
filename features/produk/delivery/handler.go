@@ -43,7 +43,6 @@ func (delivery *ProdukDelivery) PostProduk(c echo.Context) error {
 	if userId == -1 {
 		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("fail decrypt jwt token"))
 	}
-
 	produk_RequestData.User_Id = uint(userId)
 
 	if errBind != nil {
@@ -73,14 +72,20 @@ func (delivery *ProdukDelivery) Put_ProdukData(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err_conv.Error())
 	}
 
-	var dataRequest ProdukRequest
-	errBind := c.Bind(&dataRequest)
+	userId := middlewares.ExtractToken(c)
+	if userId == -1 {
+		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("fail decrypt jwt token"))
+	}
+
+	var produk_RequestData ProdukRequest
+	errBind := c.Bind(&produk_RequestData)
+	produk_RequestData.User_Id = uint(userId)
 
 	if errBind != nil {
 		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("fail bind produk data"))
 	}
 
-	row, err := delivery.produkUsecase.PutProduk(ToCore(dataRequest), id_conv)
+	row, err := delivery.produkUsecase.PutProduk(ToCore(produk_RequestData), id_conv)
 
 	if err != nil || row != 1 {
 		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("fail update produk data"))
