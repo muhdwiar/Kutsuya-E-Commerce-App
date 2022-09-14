@@ -44,9 +44,8 @@ func (repo *productData) InsertProduk(newProduk produk.Core) (int, error) {
 
 func (repo *productData) UpdateDataProduk(dataProduk produk.Core, id_produk int) (int, error) {
 	var dataUpdate Produk
-	dataProduk.ID = uint(id_produk)
 
-	tx_OldData := repo.db.First(&dataUpdate, dataProduk.ID)
+	tx_OldData := repo.db.Where("user_id = ?", dataProduk.User_Id).First(&dataUpdate, id_produk)
 
 	if tx_OldData.Error != nil {
 		return -1, tx_OldData.Error
