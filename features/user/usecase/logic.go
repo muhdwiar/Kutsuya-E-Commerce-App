@@ -16,10 +16,6 @@ func New(data user.DataInterface) user.UsecaseInterface {
 }
 
 func (usecase *userUsecase) GetById(id int) (user.Core, error) {
-	if id == 0 {
-		return user.Core{}, errors.New("Id tidak boleh kosong")
-	}
-
 	result, err := usecase.userData.GetUserById(id)
 	if err != nil {
 		return user.Core{}, err
@@ -58,4 +54,12 @@ func (usecase *userUsecase) PostLogin(data user.Core) (string, error) {
 func (usecase *userUsecase) PutUser(data user.Core) (int, error) {
 	row, err := usecase.userData.UpdateUser(data)
 	return row, err
+}
+
+func (usecase *userUsecase) DeleteUser(id int) (int, error) {
+	result, err := usecase.userData.UserDelete(id)
+	if err != nil {
+		return -1, err
+	}
+	return result, nil
 }

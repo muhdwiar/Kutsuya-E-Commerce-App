@@ -23,6 +23,7 @@ func New(e *echo.Echo, usecase user.UsecaseInterface) {
 	e.POST("/users", handler.PostData)
 	e.GET("/users", handler.GetUserById, middlewares.JWTMiddleware())
 	e.PUT("/users", handler.UpdateUser, middlewares.JWTMiddleware())
+	e.DELETE("/users", handler.DeleteDataUser, middlewares.JWTMiddleware())
 
 }
 
@@ -107,4 +108,20 @@ func (delivery *UserDelivery) UpdateUser(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("Update Row Affected Is Not 1"))
 	}
 	return c.JSON(http.StatusOK, helper.Success_Resp("Success Update Data"))
+}
+
+func (delivery *UserDelivery) DeleteDataUser(c echo.Context) error {
+
+	userId := middlewares.ExtractToken(c)
+	if userId == -1 {
+		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("fail decrypt jwt token"))
+	}
+
+	row, err := delivery.userUsecase.DeleteUser(userId)
+
+	if err != nil || row != 1 {
+		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("Fail Delete User Data"))
+	}
+
+	return c.JSON(http.StatusOK, helper.Success_Resp("Success Delete User Data"))
 }
