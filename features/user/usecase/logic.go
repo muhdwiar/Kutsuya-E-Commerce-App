@@ -54,3 +54,8 @@ func (usecase *userUsecase) PostLogin(data user.Core) (string, error) {
 	return token, err
 
 }
+
+func (usecase *userUsecase) PutUser(data user.Core) (int, error) {
+	row, err := usecase.userData.UpdateUser(data)
+	return row, err
+}

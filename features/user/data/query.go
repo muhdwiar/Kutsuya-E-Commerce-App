@@ -90,3 +90,38 @@ func (repo *userData) LoginUser(data user.Core) (string, error) {
 	return token, nil
 
 }
+
+func (repo *userData) UpdateUser(data user.Core) (int, error) {
+	var userUpdate User
+	txDataOld := repo.db.First(&userUpdate, data.ID)
+
+	if txDataOld.Error != nil {
+		return -1, txDataOld.Error
+	}
+
+	if data.Nama_User != "" {
+		userUpdate.Nama_User = data.Nama_User
+	}
+
+	if data.Email != "" {
+		userUpdate.Email = data.Email
+	}
+
+	if data.Password != "" {
+		hash_pass, errHash := HashPassword(data.Password)
+		if errHash != nil {
+			return -1, errHash
+		}
+		userUpdate.Password = hash_pass
+	}
+
+	if data.Alamat != "" {
+		userUpdate.Alamat = data.Alamat
+	}
+
+	tx := repo.db.Save(&userUpdate)
+	if tx.Error != nil {
+		return 0, tx.Error
+	}
+	return int(tx.RowsAffected), nil
+}
