@@ -3,7 +3,9 @@ package delivery
 import (
 	"net/http"
 	"project/kutsuya/features/user"
+	"project/kutsuya/middlewares"
 	"project/kutsuya/utils/helper"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -20,6 +22,21 @@ func New(e *echo.Echo, usecase user.UsecaseInterface) {
 	// e.GET("/users", handler.GetAll, middlewares.JWTMiddleware())
 	e.POST("/login", handler.LoginUser)
 	e.POST("/users", handler.PostData)
+	e.GET("/users/:id", handler.GetUserById, middlewares.JWTMiddleware())
+
+}
+
+func (delivery *UserDelivery) GetUserById(c echo.Context) error {
+	id := c.Param("id")
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("fail conv id"))
+	}
+	result, err := delivery.userUsecase.GetById(idInt)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("fail get user data by id"))
+	}
+	return c.JSON(http.StatusOK, helper.Success_DataResp("succes get data by id", result))
 
 }
 

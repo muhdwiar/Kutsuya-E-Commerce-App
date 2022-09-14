@@ -13,8 +13,20 @@ func New(data user.DataInterface) user.UsecaseInterface {
 	return &userUsecase{
 		userData: data,
 	}
-
 }
+
+func (usecase *userUsecase) GetById(id int) (user.Core, error) {
+	if id == 0 {
+		return user.Core{}, errors.New("Id tidak boleh kosong")
+	}
+
+	result, err := usecase.userData.GetUserById(id)
+	if err != nil {
+		return user.Core{}, err
+	}
+	return result, nil
+}
+
 func (usecase *userUsecase) PostData(data user.Core) (string, int, error) {
 	if data.Nama_User == "" || data.Email == "" || data.Password == "" {
 		return "", -1, errors.New("data input ada yang kosong")

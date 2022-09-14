@@ -20,6 +20,17 @@ func New(db *gorm.DB) user.DataInterface {
 
 }
 
+func (repo *userData) GetUserById(id int) (user.Core, error) {
+	var userData User
+	userData.ID = uint(id)
+	tx := repo.db.First(&userData)
+
+	if tx.Error != nil {
+		return user.Core{}, tx.Error
+	}
+	return userData.toCore(), nil
+}
+
 func HashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	return string(bytes), err
