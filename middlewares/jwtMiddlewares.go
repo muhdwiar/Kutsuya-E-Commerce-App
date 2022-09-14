@@ -21,7 +21,7 @@ func CreateToken(userId int) (string, error) {
 	claims["authorized"] = true
 	claims["userId"] = userId
 
-	claims["exp"] = time.Now().Add(time.Hour * 1).Unix() //expired stlh 1 jam
+	claims["exp"] = time.Now().Add(time.Hour * 12).Unix() //expired stlh 12 jam
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(config.SECRET_JWT))
 }
