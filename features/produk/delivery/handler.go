@@ -135,6 +135,6 @@ func (delivery *ProdukDelivery) Delete_ProdukData(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("Fail Delete Produk Data"))
 	}
 
-	return c.JSON(http.StatusOK, helper.Success_Resp("Success Update Produk Data"))
+	return c.JSON(http.StatusOK, helper.Success_Resp("Success Delete Produk Data"))
 
 }
