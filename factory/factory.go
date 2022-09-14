@@ -9,9 +9,9 @@ import (
 	produkDelivery "project/kutsuya/features/produk/delivery"
 	produkUsecase "project/kutsuya/features/produk/usecase"
 
-	// cartData "project/kutsuya/features/shopping_cart/data"
-	// cartDelivery "project/kutsuya/features/shopping_cart/delivery"
-	// cartUsecase "project/kutsuya/features/shopping_cart/usecase"
+	cartData "project/kutsuya/features/shopping_cart/data"
+	cartDelivery "project/kutsuya/features/shopping_cart/delivery"
+	cartUsecase "project/kutsuya/features/shopping_cart/usecase"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -26,7 +26,7 @@ func InitFactory(e *echo.Echo, db *gorm.DB) {
 	produkUsecaseFactory := produkUsecase.New(produkDataFactory)
 	produkDelivery.New(e, produkUsecaseFactory)
 
-	// cartDataFactory := cartData.New(db)
-	// cartUsecaseFactory := cartUsecase.New(cartDataFactory)
-	// cartDelivery.New(e, cartUsecaseFactory)
+	cartDataFactory := cartData.New(db)
+	cartUsecaseFactory := cartUsecase.New(cartDataFactory)
+	cartDelivery.New(e, cartUsecaseFactory)
 }

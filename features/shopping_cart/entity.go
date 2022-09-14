@@ -8,14 +8,16 @@ import (
 
 type Core struct {
 	ID          uint
-	Jumlah      int
-	Total_Biaya int
 	User_Id     uint
-	User        user.Core
 	Product_Id  uint
+	Nama_Produk string
+	Ukuran      int
+	Merk        string
+	Biaya       int
+	File_Image  string
+	User        user.Core
 	Produk      produk.Core
 	Created_At  time.Time
-	Updated_At  time.Time
 }
 
 type UsecaseInterface interface {

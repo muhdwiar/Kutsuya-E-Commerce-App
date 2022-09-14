@@ -5,20 +5,26 @@ import (
 )
 
 type CartResponse struct {
-	ID          uint `json:"id" form:"id"`
-	Jumlah      int  `json:"jumlah" form:"jumlah"`
-	Total_Biaya int  `json:"total_biaya" form:"total_biaya"`
-	User_Id     uint `json:"user_id" form:"user_id"`
-	Product_Id  uint `json:"product_id" form:"product_id"`
+	ID          uint   `json:"id" form:"id"`
+	User_Id     uint   `json:"user_id" form:"user_id"`
+	Product_Id  uint   `json:"product_id" form:"product_id"`
+	Nama_Produk string `json:"nama_produk" form:"nama_produk"`
+	Ukuran      int    `json:"ukuran" form:"ukuran"`
+	Merk        string `json:"merk" form:"merk"`
+	Biaya       int    `json:"biaya" form:"biaya"`
+	File_Image  string `json:"file_image" form:"file_image"`
 }
 
 func FromCore(dataCore shopping_cart.Core) CartResponse {
 	return CartResponse{
 		ID:          dataCore.ID,
-		Jumlah:      dataCore.Jumlah,
-		Total_Biaya: dataCore.Total_Biaya,
 		User_Id:     dataCore.User_Id,
 		Product_Id:  dataCore.Product_Id,
+		Nama_Produk: dataCore.Nama_Produk,
+		Ukuran:      dataCore.Ukuran,
+		Merk:        dataCore.Merk,
+		Biaya:       dataCore.Biaya,
+		File_Image:  dataCore.File_Image,
 	}
 
 }
