@@ -26,6 +26,7 @@ type UsecaseInterface interface {
 	PostProduk(data Core) (row int, err error)
 	PutProduk(data Core, id int) (row int, err error)
 	GetProdukById(id int) (data Core, err error)
+	DeleteProdukUser(id_user, id_produk int) (row int, err error)
 }
 
 type DataInterface interface {
@@ -33,4 +34,5 @@ type DataInterface interface {
 	InsertProduk(data Core) (row int, err error)
 	UpdateDataProduk(data Core, id int) (row int, err error)
 	SelectProdukById(id int) (data Core, err error)
+	DeleteProduk(id_user, id_produk int) (row int, err error)
 }
