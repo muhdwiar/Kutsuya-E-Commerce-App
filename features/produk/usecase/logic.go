@@ -43,3 +43,8 @@ func (usecase *produkUsecase) GetProdukById(id_produk int) (produk.Core, error) 
 	data_produk, err := usecase.produkData.SelectProdukById(id_produk)
 	return data_produk, err
 }
+
+func (usecase *produkUsecase) DeleteProdukUser(id_user, id_produk int) (int, error) {
+	row, err := usecase.produkData.DeleteProduk(id_user, id_produk)
+	return row, err
+}

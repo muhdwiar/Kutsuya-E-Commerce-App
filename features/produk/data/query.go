@@ -31,9 +31,9 @@ func (repo *productData) Select_AllProduk() ([]produk.Core, error) {
 }
 
 func (repo *productData) InsertProduk(newProduk produk.Core) (int, error) {
-	newUser := fromCore(newProduk)
+	newProdukModel := fromCore(newProduk)
 
-	tx := repo.db.Create(&newUser)
+	tx := repo.db.Create(&newProdukModel)
 	if tx.Error != nil {
 		return 0, tx.Error
 	}
@@ -105,5 +105,17 @@ func (repo *productData) SelectProdukById(id_produk int) (produk.Core, error) {
 
 	dataProdukCore := dataProduk.toCore()
 	return dataProdukCore, nil
+
+}
+
+func (repo *productData) DeleteProduk(id_user, id_produk int) (int, error) {
+	var dataProduk Produk
+	tx := repo.db.Where("user_id = ?", id_user).Delete(&dataProduk, id_produk)
+
+	if tx.Error != nil {
+		return -1, tx.Error
+	}
+
+	return int(tx.RowsAffected), nil
 
 }
