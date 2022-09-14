@@ -5,7 +5,6 @@ import (
 	"project/kutsuya/features/user"
 	"project/kutsuya/middlewares"
 	"project/kutsuya/utils/helper"
-	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -22,21 +21,23 @@ func New(e *echo.Echo, usecase user.UsecaseInterface) {
 	// e.GET("/users", handler.GetAll, middlewares.JWTMiddleware())
 	e.POST("/login", handler.LoginUser)
 	e.POST("/users", handler.PostData)
-	e.GET("/users/:id", handler.GetUserById, middlewares.JWTMiddleware())
+	e.GET("/users", handler.GetUserById, middlewares.JWTMiddleware())
+	e.PUT("/users", handler.UpdateUser, middlewares.JWTMiddleware())
 
 }
 
 func (delivery *UserDelivery) GetUserById(c echo.Context) error {
-	id := c.Param("id")
-	idInt, err := strconv.Atoi(id)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("Fail Conv Id"))
+
+	userId := middlewares.ExtractToken(c)
+	if userId == -1 {
+		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("fail decrypt jwt token"))
 	}
-	result, err := delivery.userUsecase.GetById(idInt)
+
+	result, err := delivery.userUsecase.GetById(userId)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("Fail Get User Data By Id"))
 	}
-	return c.JSON(http.StatusOK, helper.Success_DataResp("Success Get Data By Id", result))
+	return c.JSON(http.StatusOK, helper.Success_DataResp("Success Get Data By Id", FromCore(result)))
 
 }
 
@@ -78,4 +79,32 @@ func (delivery *UserDelivery) LoginUser(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, helper.Success_DataResp("Success Login", Token_JWT))
 
+}
+
+func (delivery *UserDelivery) UpdateUser(c echo.Context) error {
+
+	userId := middlewares.ExtractToken(c)
+	if userId == -1 {
+		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("fail decrypt jwt token"))
+	}
+
+	var userUpdate UserRequest
+	errBind := c.Bind(&userUpdate)
+	if errBind != nil {
+		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("Fail Bind User Data"))
+	}
+
+	userUpdateCore := ToCore(userUpdate)
+	userUpdateCore.ID = uint(userId)
+
+	row, err := delivery.userUsecase.PutUser(userUpdateCore)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("Fail Update User Data"))
+	}
+
+	if row != 1 {
+		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("Update Row Affected Is Not 1"))
+	}
+	return c.JSON(http.StatusOK, helper.Success_Resp("Success Update Data"))
 }
