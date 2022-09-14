@@ -93,3 +93,18 @@ func (repo *productData) UpdateDataProduk(dataProduk produk.Core, id_produk int)
 	return int(tx_newData.RowsAffected), nil
 
 }
+
+func (repo *productData) SelectProdukById(id_produk int) (produk.Core, error) {
+	var dataProduk Produk
+	dataProduk.ID = uint(id_produk)
+
+	tx := repo.db.First(&dataProduk)
+
+	if tx.Error != nil {
+		return produk.Core{}, tx.Error
+	}
+
+	dataProdukCore := dataProduk.toCore()
+	return dataProdukCore, nil
+
+}
