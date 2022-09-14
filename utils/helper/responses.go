@@ -4,7 +4,7 @@ import "net/http"
 
 func Fail_Resp(msg string) map[string]interface{} {
 	return map[string]interface{}{
-		"Status":  "FAILED",
+		"Status":  "Failed",
 		"Message": msg,
 	}
 
@@ -12,7 +12,7 @@ func Fail_Resp(msg string) map[string]interface{} {
 
 func Success_Resp(msg string) map[string]interface{} {
 	return map[string]interface{}{
-		"Status":  "SUCCESS",
+		"Status":  "Success",
 		"Message": msg,
 	}
 
@@ -20,7 +20,7 @@ func Success_Resp(msg string) map[string]interface{} {
 
 func Success_DataResp(msg string, data interface{}) map[string]interface{} {
 	return map[string]interface{}{
-		"Status":  "SUCCESS",
+		"Status":  "Success",
 		"Message": msg,
 		"Data":    data,
 		"code":    http.StatusOK,
