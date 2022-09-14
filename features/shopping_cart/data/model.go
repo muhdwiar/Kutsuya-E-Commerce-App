@@ -10,20 +10,26 @@ import (
 
 type Shopping_Cart struct {
 	gorm.Model
-	Jumlah      int
-	Total_Biaya int
 	User_Id     uint
-	User        userModel.User
 	Product_Id  uint
-	Produk      produkModel.Produk
+	Nama_Produk string
+	Ukuran      int
+	Merk        string
+	Biaya       int
+	File_Image  string
+	User        userModel.User     `gorm:"foreignKey:User_Id"`
+	Produk      produkModel.Produk `gorm:"foreignKey:Product_Id"`
 }
 
 func fromCore(dataCore shopping_cart.Core) Shopping_Cart {
 	return Shopping_Cart{
-		Jumlah:      dataCore.Jumlah,
-		Total_Biaya: dataCore.Total_Biaya,
 		User_Id:     dataCore.User_Id,
 		Product_Id:  dataCore.Product_Id,
+		Nama_Produk: dataCore.Nama_Produk,
+		Ukuran:      dataCore.Ukuran,
+		Merk:        dataCore.Merk,
+		Biaya:       dataCore.Biaya,
+		File_Image:  dataCore.File_Image,
 	}
 
 }
@@ -31,10 +37,13 @@ func fromCore(dataCore shopping_cart.Core) Shopping_Cart {
 func (dataCart *Shopping_Cart) toCore() shopping_cart.Core {
 	return shopping_cart.Core{
 		ID:          dataCart.ID,
-		Jumlah:      dataCart.Jumlah,
-		Total_Biaya: dataCart.Total_Biaya,
 		User_Id:     dataCart.User_Id,
 		Product_Id:  dataCart.Product_Id,
+		Nama_Produk: dataCart.Nama_Produk,
+		Ukuran:      dataCart.Ukuran,
+		Merk:        dataCart.Merk,
+		Biaya:       dataCart.Biaya,
+		File_Image:  dataCart.File_Image,
 	}
 }
 
