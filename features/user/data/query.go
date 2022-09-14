@@ -50,14 +50,15 @@ func (repo *userData) InsertData(data user.Core) (string, int, error) {
 	data.Password = hash_pass //memasukkan hasil enskripsi data password
 
 	newUser := fromCore(data)
-	token, errToken := middlewares.CreateToken(int(newUser.ID))
-	if errToken != nil {
-		return "", -1, errToken
-	}
 
 	tx := repo.db.Create(&newUser)
 	if tx.Error != nil {
 		return "", 0, tx.Error
+	}
+
+	token, errToken := middlewares.CreateToken(int(newUser.ID))
+	if errToken != nil {
+		return "", -1, errToken
 	}
 
 	return token, int(tx.RowsAffected), nil
