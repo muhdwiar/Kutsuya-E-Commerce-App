@@ -19,14 +19,14 @@ type Core struct {
 type CoreRequest struct {
 	ID         uint
 	User_Id    uint
-	Product_Id uint
+	Cart_Id    uint
 	Jumlah     int
 	User       user.Core
 	Created_At time.Time
 }
 
 type UsecaseInterface interface {
-	InsertHistoryOrder(data CoreRequest) (row int, err error)
+	InsertHistoryOrder(data []CoreRequest, user_id int) (row int, err error)
 }
 
 type DataInterface interface {

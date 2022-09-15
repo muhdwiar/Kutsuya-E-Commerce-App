@@ -2,41 +2,53 @@ package usecase
 
 import (
 	history "project/kutsuya/features/history_order"
-	queryProduk "project/kutsuya/features/produk/data"
-
-	"gorm.io/gorm"
+	cart "project/kutsuya/features/shopping_cart"
 )
 
 type historyUsecase struct {
 	historyData history.DataInterface
+	cartData    cart.DataInterface
 }
 
-func New(data history.DataInterface) history.UsecaseInterface {
+func New(data history.DataInterface, dataCart cart.DataInterface) history.UsecaseInterface {
 	return &historyUsecase{
 		historyData: data,
+		cartData:    dataCart,
 	}
 }
 
-func (usecase *historyUsecase) InsertHistoryOrder(newHistory history.CoreRequest) (int, error) {
+func (usecase *historyUsecase) InsertHistoryOrder(newHistoryList []history.CoreRequest, user_id int) (int, error) {
 
-	var db *gorm.DB
-	data_produk := queryProduk.New(db)
+	var total_row, row_delete int
+	for _, valueHistory := range newHistoryList {
+		dataProduk, errProduk := usecase.cartData.GetCartByID(int(valueHistory.Cart_Id))
+		if errProduk != nil {
+			return total_row, errProduk
+		}
 
-	dataProduk, errProduk := data_produk.SelectProdukById(int(newHistory.Product_Id))
+		var newHistoryCore history.Core
+		newHistoryCore.User_Id = uint(user_id)
+		newHistoryCore.Nama_Produk = dataProduk.Nama_Produk
+		newHistoryCore.Jumlah = valueHistory.Jumlah
+		newHistoryCore.Total_Biaya = valueHistory.Jumlah * dataProduk.Harga
+		newHistoryCore.Status_Order = "Pembelian Sukses"
 
-	if errProduk != nil {
-		return -1, errProduk
+		row, err := usecase.historyData.CreateHistoryOrder(newHistoryCore)
+
+		total_row += row
+		if err != nil {
+			return total_row, err
+		}
+
+		rowDel, errDel := usecase.cartData.DelCartByID(int(valueHistory.Cart_Id), user_id)
+
+		row_delete += rowDel
+		if errDel != nil {
+			return rowDel, errDel
+		}
+
 	}
 
-	var newHistoryCore history.Core
-	newHistoryCore.User_Id = newHistory.User_Id
-	newHistoryCore.Nama_Produk = dataProduk.Nama_Produk
-	newHistoryCore.Jumlah = newHistory.Jumlah
-	newHistoryCore.Total_Biaya = newHistory.Jumlah * dataProduk.Harga
-	newHistoryCore.Status_Order = "Pembelian Sukses"
-
-	row, err := usecase.historyData.CreateHistoryOrder(newHistoryCore)
-
-	return row, err
+	return total_row, nil
 
 }
