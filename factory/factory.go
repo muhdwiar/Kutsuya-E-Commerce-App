@@ -13,6 +13,10 @@ import (
 	cartDelivery "project/kutsuya/features/shopping_cart/delivery"
 	cartUsecase "project/kutsuya/features/shopping_cart/usecase"
 
+	historyData "project/kutsuya/features/history_order/data"
+	historyDelivery "project/kutsuya/features/history_order/delivery"
+	historyUsecase "project/kutsuya/features/history_order/usecase"
+
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
@@ -29,4 +33,8 @@ func InitFactory(e *echo.Echo, db *gorm.DB) {
 	cartDataFactory := cartData.New(db)
 	cartUsecaseFactory := cartUsecase.New(cartDataFactory)
 	cartDelivery.New(e, cartUsecaseFactory)
+
+	historyDataFactory := historyData.New(db)
+	historyUsecaseFactory := historyUsecase.New(historyDataFactory)
+	historyDelivery.New(e, historyUsecaseFactory)
 }
