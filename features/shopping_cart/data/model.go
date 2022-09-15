@@ -15,7 +15,7 @@ type Shopping_Cart struct {
 	Nama_Produk string
 	Ukuran      int
 	Merk        string
-	Biaya       int
+	Harga       int
 	File_Image  string
 	User        userModel.User     `gorm:"foreignKey:User_Id"`
 	Produk      produkModel.Produk `gorm:"foreignKey:Product_Id"`
@@ -28,7 +28,7 @@ func fromCore(dataCore shopping_cart.Core) Shopping_Cart {
 		Nama_Produk: dataCore.Nama_Produk,
 		Ukuran:      dataCore.Ukuran,
 		Merk:        dataCore.Merk,
-		Biaya:       dataCore.Biaya,
+		Harga:       dataCore.Harga,
 		File_Image:  dataCore.File_Image,
 	}
 
@@ -42,7 +42,7 @@ func (dataCart *Shopping_Cart) toCore() shopping_cart.Core {
 		Nama_Produk: dataCart.Nama_Produk,
 		Ukuran:      dataCart.Ukuran,
 		Merk:        dataCart.Merk,
-		Biaya:       dataCart.Biaya,
+		Harga:       dataCart.Harga,
 		File_Image:  dataCart.File_Image,
 	}
 }
