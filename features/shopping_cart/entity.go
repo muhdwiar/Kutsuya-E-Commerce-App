@@ -13,7 +13,7 @@ type Core struct {
 	Nama_Produk string
 	Ukuran      int
 	Merk        string
-	Biaya       int
+	Harga       int
 	File_Image  string
 	User        user.Core
 	Produk      produk.Core
