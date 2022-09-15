@@ -19,18 +19,16 @@ type Core struct {
 type CoreRequest struct {
 	ID         uint
 	User_Id    uint
-	Product_Id uint
+	Cart_Id    uint
 	Jumlah     int
 	User       user.Core
 	Created_At time.Time
 }
 
 type UsecaseInterface interface {
-	// InsertCart(data Core) (row int, err error)
-	// SelectCarts(user_id int) (data []Core, err error)
+	InsertHistoryOrder(data []CoreRequest, user_id int) (row int, err error)
 }
 
 type DataInterface interface {
-	// CreateCart(data Core) (row int, err error)
-	// FindCarts(user_id int) (data []Core, err error)
+	CreateHistoryOrder(data Core) (row int, err error)
 }
