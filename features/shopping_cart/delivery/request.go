@@ -10,7 +10,7 @@ type CartRequest struct {
 	Nama_Produk string `json:"nama_produk" form:"nama_produk"`
 	Ukuran      int    `json:"ukuran" form:"ukuran"`
 	Merk        string `json:"merk" form:"merk"`
-	Biaya       int    `json:"biaya" form:"biaya"`
+	Harga       int    `json:"harga" form:"harga"`
 	File_Image  string `json:"file_image" form:"file_image"`
 }
 
@@ -21,7 +21,7 @@ func ToCore(dataRequest CartRequest) shopping_cart.Core {
 		Nama_Produk: dataRequest.Nama_Produk,
 		Ukuran:      dataRequest.Ukuran,
 		Merk:        dataRequest.Merk,
-		Biaya:       dataRequest.Biaya,
+		Harga:       dataRequest.Harga,
 		File_Image:  dataRequest.File_Image,
 	}
 

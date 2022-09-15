@@ -11,7 +11,7 @@ type CartResponse struct {
 	Nama_Produk string `json:"nama_produk" form:"nama_produk"`
 	Ukuran      int    `json:"ukuran" form:"ukuran"`
 	Merk        string `json:"merk" form:"merk"`
-	Biaya       int    `json:"biaya" form:"biaya"`
+	Harga       int    `json:"harga" form:"harga"`
 	File_Image  string `json:"file_image" form:"file_image"`
 }
 
@@ -23,7 +23,7 @@ func FromCore(dataCore shopping_cart.Core) CartResponse {
 		Nama_Produk: dataCore.Nama_Produk,
 		Ukuran:      dataCore.Ukuran,
 		Merk:        dataCore.Merk,
-		Biaya:       dataCore.Biaya,
+		Harga:       dataCore.Harga,
 		File_Image:  dataCore.File_Image,
 	}
 
