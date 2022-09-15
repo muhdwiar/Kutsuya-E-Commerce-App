@@ -21,7 +21,9 @@ type Core struct {
 }
 
 type UsecaseInterface interface {
+	InsertCart(data Core) (row int, err error)
 }
 
 type DataInterface interface {
+	CreateCart(data Core) (row int, err error)
 }

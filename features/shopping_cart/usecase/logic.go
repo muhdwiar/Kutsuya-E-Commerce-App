@@ -1,15 +1,27 @@
 package usecase
 
 import (
-	"project/kutsuya/features/shopping_cart"
+	"errors"
+	cart "project/kutsuya/features/shopping_cart"
 )
 
 type cartUsecase struct {
-	cartData shopping_cart.DataInterface
+	cartData cart.DataInterface
 }
 
-func New(data shopping_cart.DataInterface) shopping_cart.UsecaseInterface {
+func New(data cart.DataInterface) cart.UsecaseInterface {
 	return &cartUsecase{
 		cartData: data,
 	}
+}
+
+func (usecase *cartUsecase) InsertCart(dataCart cart.Core) (int, error) {
+	if dataCart.Product_Id == 0 || dataCart.User_Id == 0 {
+		return -1, errors.New("data Product_Id and User_Id is null")
+
+	}
+
+	row, err := usecase.cartData.CreateCart(dataCart)
+	return row, err
+
 }
