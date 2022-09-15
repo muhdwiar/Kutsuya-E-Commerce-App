@@ -82,3 +82,9 @@ func (usecase *historyUsecase) InsertHistoryCancel(cancelHistory history.CoreReq
 	return row, nil
 
 }
+
+func (usecase *historyUsecase) SelectOrders(user_id int) ([]history.Core, error) {
+	results, err := usecase.historyData.FindAllOrder(user_id)
+	return results, err
+
+}

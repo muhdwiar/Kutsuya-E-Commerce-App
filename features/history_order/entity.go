@@ -28,8 +28,10 @@ type CoreRequest struct {
 type UsecaseInterface interface {
 	InsertHistoryOrder(data []CoreRequest, user_id int) (row int, err error)
 	InsertHistoryCancel(data CoreRequest, user_id int) (row int, err error)
+	SelectOrders(user_id int) (data []Core, err error)
 }
 
 type DataInterface interface {
 	CreateHistoryOrder(data Core) (row int, err error)
+	FindAllOrder(user_id int) (data []Core, err error)
 }
