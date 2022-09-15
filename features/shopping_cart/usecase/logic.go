@@ -25,3 +25,9 @@ func (usecase *cartUsecase) InsertCart(dataCart cart.Core) (int, error) {
 	return row, err
 
 }
+
+func (usecase *cartUsecase) SelectCarts(user_id int) ([]cart.Core, error) {
+	results, err := usecase.cartData.FindCarts(user_id)
+	return results, err
+
+}
