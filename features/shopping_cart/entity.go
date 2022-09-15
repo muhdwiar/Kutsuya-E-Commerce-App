@@ -28,4 +28,6 @@ type UsecaseInterface interface {
 type DataInterface interface {
 	CreateCart(data Core) (row int, err error)
 	FindCarts(user_id int) (data []Core, err error)
+	GetCartByID(cart_id int) (data Core, err error)
+	DelCartByID(cart_id, user_id int) (row int, err error)
 }

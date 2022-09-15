@@ -37,7 +37,31 @@ func (repo *cartData) FindCarts(user_id int) ([]cart.Core, error) {
 		return nil, tx.Error
 	}
 
-	produk_List := toCoreList(all_CartData)
-	return produk_List, nil
+	cart_List := toCoreList(all_CartData)
+	return cart_List, nil
+
+}
+
+func (repo *cartData) GetCartByID(cart_id int) (cart.Core, error) {
+	var CartData Shopping_Cart
+	tx := repo.db.Find(&CartData, cart_id)
+
+	if tx.Error != nil {
+		return cart.Core{}, tx.Error
+	}
+
+	return CartData.toCore(), nil
+
+}
+
+func (repo *cartData) DelCartByID(cart_id, user_id int) (int, error) {
+	var modelCart Shopping_Cart
+	tx := repo.db.Where("user_id = ?", user_id).Delete(&modelCart, cart_id)
+
+	if tx.Error != nil {
+		return -1, tx.Error
+	}
+
+	return int(tx.RowsAffected), nil
 
 }
