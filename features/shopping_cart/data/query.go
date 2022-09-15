@@ -28,3 +28,16 @@ func (repo *cartData) CreateCart(dataCart cart.Core) (int, error) {
 	return int(tx.RowsAffected), nil
 
 }
+
+func (repo *cartData) FindCarts(user_id int) ([]cart.Core, error) {
+	var all_CartData []Shopping_Cart
+	tx := repo.db.Where("user_id = ?", user_id).Find(&all_CartData)
+
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+
+	produk_List := toCoreList(all_CartData)
+	return produk_List, nil
+
+}

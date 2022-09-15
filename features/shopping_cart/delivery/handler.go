@@ -17,7 +17,9 @@ func New(e *echo.Echo, usecase shopping_cart.UsecaseInterface) {
 	handler := &CartDelivery{
 		cartUsecase: usecase,
 	}
+
 	e.POST("/carts", handler.PostNewCart, middlewares.JWTMiddleware())
+	e.GET("/carts", handler.GetAllCarts, middlewares.JWTMiddleware())
 }
 
 func (delivery *CartDelivery) PostNewCart(c echo.Context) error {
@@ -40,4 +42,21 @@ func (delivery *CartDelivery) PostNewCart(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, helper.Success_Resp("Success Make New Cart"))
+}
+
+func (delivery *CartDelivery) GetAllCarts(c echo.Context) error {
+
+	userId := middlewares.ExtractToken(c)
+	if userId == -1 {
+		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("Fail Decrypt Jwt Token"))
+	}
+
+	result, err := delivery.cartUsecase.SelectCarts(userId)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("Fail Get All Cart Data"))
+	}
+
+	return c.JSON(http.StatusOK, helper.Success_DataResp("Success Get All Cart Data", FromCoreList(result)))
+
 }
