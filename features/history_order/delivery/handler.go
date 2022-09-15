@@ -20,7 +20,8 @@ func New(e *echo.Echo, usecase history_order.UsecaseInterface) {
 
 	e.POST("/orders", handler.PostHistoryOrder, middlewares.JWTMiddleware())
 	e.POST("/cancel", handler.PostHistoryCancel, middlewares.JWTMiddleware())
-	// e.GET("/carts", handler.GetAllCarts, middlewares.JWTMiddleware())
+	e.GET("/orders", handler.GetAllOrders, middlewares.JWTMiddleware())
+
 }
 
 func (delivery *HistoryDelivery) PostHistoryOrder(c echo.Context) error {
@@ -66,5 +67,21 @@ func (delivery *HistoryDelivery) PostHistoryCancel(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, helper.Success_Resp("Success Cancel Order"))
+
+}
+
+func (delivery *HistoryDelivery) GetAllOrders(c echo.Context) error {
+	userId := middlewares.ExtractToken(c)
+	if userId == -1 {
+		return c.JSON(http.StatusBadRequest, helper.Fail_Resp("Fail Decrypt Jwt Token"))
+	}
+
+	result, err := delivery.historyUsecase.SelectOrders(userId)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.Fail_Resp("Fail Get All Orders"))
+	}
+
+	return c.JSON(http.StatusOK, helper.Success_DataResp("Success Get All Orders", FromCoreList(result)))
 
 }

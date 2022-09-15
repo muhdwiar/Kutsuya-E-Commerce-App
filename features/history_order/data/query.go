@@ -29,3 +29,16 @@ func (repo *historyData) CreateHistoryOrder(newHistory history.Core) (int, error
 	return int(tx.RowsAffected), nil
 
 }
+
+func (repo *historyData) FindAllOrder(user_id int) ([]history.Core, error) {
+	var all_OrderData []History_Order
+	tx := repo.db.Where("user_id = ?", user_id).Find(&all_OrderData)
+
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+
+	order_List := toCoreList(all_OrderData)
+	return order_List, nil
+
+}
