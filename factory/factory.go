@@ -31,7 +31,7 @@ func InitFactory(e *echo.Echo, db *gorm.DB) {
 	produkDelivery.New(e, produkUsecaseFactory)
 
 	cartDataFactory := cartData.New(db)
-	cartUsecaseFactory := cartUsecase.New(cartDataFactory)
+	cartUsecaseFactory := cartUsecase.New(cartDataFactory, produkDataFactory)
 	cartDelivery.New(e, cartUsecaseFactory)
 
 	historyDataFactory := historyData.New(db)
