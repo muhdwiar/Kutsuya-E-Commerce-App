@@ -27,6 +27,7 @@ type CoreRequest struct {
 
 type UsecaseInterface interface {
 	InsertHistoryOrder(data []CoreRequest, user_id int) (row int, err error)
+	InsertHistoryCancel(data CoreRequest, user_id int) (row int, err error)
 }
 
 type DataInterface interface {
