@@ -1,4 +1,11 @@
 mode: set
+project/kutsuya/features/shopping_cart/usecase/logic.go:14.94,19.2 1 1
+project/kutsuya/features/shopping_cart/usecase/logic.go:21.73,22.55 1 0
+project/kutsuya/features/shopping_cart/usecase/logic.go:26.2,27.22 2 0
+project/kutsuya/features/shopping_cart/usecase/logic.go:31.2,38.17 7 0
+project/kutsuya/features/shopping_cart/usecase/logic.go:22.55,24.3 1 0
+project/kutsuya/features/shopping_cart/usecase/logic.go:27.22,29.3 1 0
+project/kutsuya/features/shopping_cart/usecase/logic.go:42.75,46.2 2 1
 project/kutsuya/features/produk/usecase/logic.go:12.61,17.2 1 1
 project/kutsuya/features/produk/usecase/logic.go:19.70,23.2 2 1
 project/kutsuya/features/produk/usecase/logic.go:25.78,26.57 1 1
