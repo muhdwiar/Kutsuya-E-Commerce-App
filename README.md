@@ -30,7 +30,7 @@ git init
 ```
 
 ## Features
-In some features, using JWT Token. This token is obtained when logging in. To find out the complete documentation of each feature, please check the provided <a href="https://app.swaggerhub.com/apis-docs/raorafarhan/open-api_kutsuya/1.0.0#/">Swagger</a>. The available features are as follows:
+In some features, using JWT Token. This token is obtained when logging in. To find out the complete documentation of each feature, please check the provided <a href="https://app.swaggerhub.com/apis-docs/raorafarhan/open-api_kutsuya/1.0.0#/" target="_blank">Swagger</a>. The available features are as follows:
 
 ### :adult: User
 | Endpoint | Feature | Description | Token |
